@@ -72,6 +72,8 @@ Using the command line argument `--config`, a directory where to read the config
 
 ```shell
 python3 /opt/dht-mqtt-daemon/dht-mqtt-daemon.py --config /opt/dht-config
+
+
 ```
 
 The extensive output can be reduced to error messages:
@@ -79,3 +81,30 @@ The extensive output can be reduced to error messages:
 ```shell
 python3 /opt/dht-mqtt-daemon/dht-mqtt-daemon.py > /dev/null
 ```
+
+### Continuous Daemon/Service
+
+You most probably want to execute the program **continuously in the background**.
+This can be done either by using the internal daemon or cron.
+
+**Attention:** Daemon mode must be enabled in the configuration file (default). See the [Daemon] section in the config.ini file.
+
+1. Systemd service - on systemd powered systems the **recommended** option
+
+```shell
+[Unit]
+Description=DHT22 Sensor MQTT Client/Daemon
+Documentation=https://github.com/spencer-scott/dht-mqtt-daemon
+After=multi-user.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/opt/dht-mqtt-daemon/
+ExecStart=/usr/bin/python3 /opt/dht-mqtt-daemon/dht-mqtt-daemon.py
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+```
+
