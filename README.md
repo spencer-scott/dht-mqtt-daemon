@@ -72,8 +72,6 @@ Using the command line argument `--config`, a directory where to read the config
 
 ```shell
 python3 /opt/dht-mqtt-daemon/dht-mqtt-daemon.py --config /opt/dht-config
-
-
 ```
 
 The extensive output can be reduced to error messages:
@@ -92,19 +90,13 @@ This can be done either by using the internal daemon or cron.
 1. Systemd service - on systemd powered systems the **recommended** option
 
 ```shell
-[Unit]
-Description=DHT22 Sensor MQTT Client/Daemon
-Documentation=https://github.com/spencer-scott/dht-mqtt-daemon
-After=multi-user.target
+sudo cp /opt/dht-mqtt-daemon/template.service /etc/systemd/system/dht_mqtt.service
 
-[Service]
-Type=simple
-User=pi
-WorkingDirectory=/opt/dht-mqtt-daemon/
-ExecStart=/usr/bin/python3 /opt/dht-mqtt-daemon/dht-mqtt-daemon.py
-Restart=on-abort
 
-[Install]
-WantedBy=multi-user.target
+sudo systemctl daemon-reload
+sudo systemctl enable dht_mqtt.service
+sudo systemctl start dht_mqtt.service
+sudo systemctl status dht_mqtt.service
 ```
+
 
