@@ -1,0 +1,14 @@
+[Unit]
+Description=DHT22 Sensor MQTT Client/Daemon
+Documentation=https://github.com/spencer-scott/dht-mqtt-daemon
+After=multi-user.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/opt/dht-mqtt-daemon/
+ExecStart=/usr/bin/python3 /opt/dht-mqtt-daemon/dht-mqtt-daemon.py
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
